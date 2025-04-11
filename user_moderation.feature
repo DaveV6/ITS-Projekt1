@@ -4,12 +4,19 @@ Feature: Moderating users as an admin
         Given I am logged in as an admin
         And I am viewing customers
     
-    Scenario: Create a new customer with valid details
+    Scenario: Create a new customer with valid mandatory details
         When I click "Add"
         And I fill in the mandatory customer details
         And I fill in the first name as "John"
         And I click "Save"
         Then a new user with first name "John" should be created
+    
+    Scenario: Create a new customer with missing mandatory details
+        When I click "Add"
+        And I don't fill in the mandatory customer details
+        And I click "Save"
+        Then the system should show an error message "Fields with * are required."
+        And no user will be created
 
     Scenario: Update an existing customer's last name
         Given customer "John Doe" exists in the system
