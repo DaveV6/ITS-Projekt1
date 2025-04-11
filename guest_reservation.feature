@@ -117,3 +117,10 @@ Feature: Creating reservation as guest (unregistered user)
         And the user submits the reservation form
         Then an error message about missing phone number should be displayed
         And the reservation should not be submitted
+
+    Scenario: Time slot becomes unavailable during reservation
+        Given two users start reserving the same time slot simultaneously
+        When the first user completes the reservation
+        And the second user attempts to complete reservation
+        Then the second user should see an error message
+    
