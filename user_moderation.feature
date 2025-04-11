@@ -1,0 +1,35 @@
+Feature: Moderating users as an admin
+
+    Background:
+        Given I am logged in as an admin
+        And I am viewing customers
+    
+    Scenario: Create a new customer with valid details
+        When I click "Add"
+        And I fill in the mandatory customer details
+        And I fill in the first name as "John"
+        And I click "Save"
+        Then a new user with first name "John" should be created
+
+    Scenario: Update an existing customer's last name
+        Given customer "John Doe" exists in the system
+        When I search for "John Doe"
+        And I click "Edit" on his profile
+        And I change the last name to "Depp"
+        And I click "Save"
+        Then the user's last name is changed to "Depp"
+
+    Scenario: Delete a customer without appointments
+        Given customer "Alice Smith" has no appointments
+        When I select "Alice Smith" from the list
+        And I click "Delete"
+        And I confirm deletion in the dialog
+        Then the customer "Alice Smith" will be removed from the system
+
+    Scenario: Delete a customer with appointments
+        Given customer "James Lebron" has an appointment
+        When I select "James Lebron" from the list
+        And I click "Delete"
+        And I confirm deletion in the dialog
+        Then the customer "James Lebron" will be removed from the system
+        And the time slot which his apppointment occupied will be free
