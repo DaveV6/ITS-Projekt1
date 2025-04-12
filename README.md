@@ -1,7 +1,3 @@
-DaveV6: Based on my .feature files how could my README look?
-
-Workspace: Collecting workspace informationBased on your feature files, I can help you improve your README to better represent your project. Here's a suggested format:
-
 # ITS Project 1 - Appointment Reservation System
 
 - **Author:** David Bujzaš (xbujzad00)
