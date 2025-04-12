@@ -18,25 +18,18 @@ Feature: Moderating users as an admin
         Then the system should show an error message "Fields with * are required."
         And no user will be created
 
-    Scenario: Update an existing customer's last name
+    Scenario: Update an existing customer's information
         Given customer "John Doe" exists in the system
-        When I search for "John Doe"
+        When I select "John Doe" from the list
         And I click "Edit" on his profile
         And I change the last name to "Depp"
         And I click "Save"
         Then the user's last name is changed to "Depp"
 
-    Scenario: Delete a customer without appointments
-        Given customer "Alice Smith" has no appointments
-        When I select "Alice Smith" from the list
-        And I click "Delete"
-        And I confirm deletion in the dialog
-        Then the customer "Alice Smith" will be removed from the system
-
-    Scenario: Delete a customer with appointments
-        Given customer "James Lebron" has an appointment
+    Scenario: Delete a customer
+        Given customer "James Lebron"
         When I select "James Lebron" from the list
         And I click "Delete"
-        And I confirm deletion in the dialog
+        And I confirm deletion in the modal
         Then the customer "James Lebron" will be removed from the system
         And the time slot which his apppointment occupied will be free

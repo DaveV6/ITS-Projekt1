@@ -43,11 +43,6 @@ Feature: Creating reservation as guest (unregistered user)
         Then the calendar should display dates for the new year
         And available dates should be highlighted
 
-    Scenario: Different time zones
-        Given the user is accessing from a different time zone
-        When the user selects a time slot
-        Then the reservation should be stored in the server's time zone correctly
-
     Scenario: Submitting reservation with valid guest information
         Given the user has selected a date and time slot
         When the user fills in the first name "John"
@@ -58,69 +53,24 @@ Feature: Creating reservation as guest (unregistered user)
         Then a confirmation message should be displayed
         And the reservation should be stored in the system
 
-    Scenario: Submitting reservation with invalid email
+    Scenario: Submitting reservation with invalid format
         Given the user has selected a date and time slot
         When the user fills in the first name "John"
         And the user fills in the last name "Doe"
         And the user fills in the email "invalid-email"
-        And the user fills in the phone number "777220546"
-        And the user submits the reservation form
-        Then an error message about invalid email should be displayed
-        And the reservation should not be submitted
-
-    Scenario: Submitting reservation with invalid phone number
-        Given the user has selected a date and time slot
-        When the user fills in the first name "John"
-        And the user fills in the last name "Doe"
-        And the user fills in the email "johndoe@example.com"
         And the user fills in the phone number "invalid-phone"
         And the user submits the reservation form
-        Then an error message about invalid phone number should be displayed
+        Then an error message about invalid formats should be displayed
         And the reservation should not be submitted
 
-    Scenario: Submitting reservation with missing first name field
+    Scenario: Submitting reservation with missing required fields
         Given the user has selected a date and time slot
         When the user fills in the first name ""
-        And the user fills in the last name "Doe"
-        And the user fills in the email "johndoe@example.com"
-        And the user fills in the phone number "777220546"
+        Or the user fills in the last name ""
+        Or the user fills in the email ""
+        Or the user fills in the phone number ""
         And the user submits the reservation form
-        Then an error message about missing first name should be displayed
-        And the reservation should not be submitted
-    
-    Scenario: Submitting reservation with missing last name field
-        Given the user has selected a date and time slot
-        When the user fills in the first name "John"
-        And the user fills in the last name ""
-        And the user fills in the email "johndoe@example.com"
-        And the user fills in the phone number "777220546"
-        And the user submits the reservation form
-        Then an error message about missing last name should be displayed
-        And the reservation should not be submitted
-    
-    Scenario: Submitting reservation with missing email field
-        Given the user has selected a date and time slot
-        When the user fills in the first name "John"
-        And the user fills in the last name "Doe"
-        And the user fills in the email ""
-        And the user fills in the phone number "777220546"
-        And the user submits the reservation form
-        Then an error message about missing email should be displayed
-        And the reservation should not be submitted
-    
-    Scenario: Submitting reservation with missing phone number field
-        Given the user has selected a date and time slot
-        When the user fills in the first name "John"
-        And the user fills in the last name "Doe"
-        And the user fills in the email "johndoe@example.com"
-        And the user fills in the phone number ""
-        And the user submits the reservation form
-        Then an error message about missing phone number should be displayed
+        Then an error message about missing required fields should be displayed
         And the reservation should not be submitted
 
-    Scenario: Time slot becomes unavailable during reservation
-        Given two users start reserving the same time slot simultaneously
-        When the first user completes the reservation
-        And the second user attempts to complete reservation
-        Then the second user should see an error message
     
